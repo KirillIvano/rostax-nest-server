@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "composite": true,
+    "incremental": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "removeComments": true,
+    "strict": true,
+    "strictPropertyInitialization": false, 
+    "baseUrl": "./",
+    "esModuleInterop": true,
+    "paths": {
+      "~/*": ["src/*"],
+    },
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+  ]
+}

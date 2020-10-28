@@ -1,0 +1,9 @@
+/jsconfig.json
+/.vscode
+/node_modules
+/dist
+/resources
+/imagesHost
+/tsconfig.tsbuildinfo
+/ormconfig.json
+.env
