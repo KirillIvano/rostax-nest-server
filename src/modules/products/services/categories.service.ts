@@ -15,7 +15,6 @@ export class CategoriesService implements ICategoriesService {
     constructor(
         @InjectRepository(CategoryModel) private categoriesRepository: Repository<CategoryModel>,
         @InjectRepository(ProductModel) private productsRepository: Repository<ProductModel>,
-
     ) {}
 
     getCategories = async (): Promise<CategoryPreviewDto[]> =>

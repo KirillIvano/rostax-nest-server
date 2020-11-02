@@ -1,10 +1,10 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
+import {Entity, Column, PrimaryGeneratedColumn, BaseEntity, OneToMany} from 'typeorm';
 
 import {ProductModel} from './product.entity';
 
 
-@Entity()
-export class CategoryModel {
+@Entity({name: 'categories'})
+export class CategoryModel extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -14,6 +14,6 @@ export class CategoryModel {
     @Column()
     image: string;
 
-    @ManyToOne(() => ProductModel, product => product.category)
+    @OneToMany(() => ProductModel, product => product.category)
     products: Promise<ProductModel[]>
 }

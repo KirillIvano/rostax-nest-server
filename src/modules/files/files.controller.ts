@@ -2,7 +2,6 @@ import {Controller, Inject, Post, UploadedFile, UseInterceptors} from '@nestjs/c
 import {FileInterceptor} from '@nestjs/platform-express';
 
 import {getFileExtension} from '~/util/getFileExtension';
-import {jsonResponse, ResponseType} from '~/util/jsonResponse';
 
 import {IFileService} from './interfaces/IFileService';
 

@@ -1,5 +1,5 @@
 import {Expose} from 'class-transformer';
-import {IsOptional, IsString} from 'class-validator';
+import {IsNotEmpty, IsOptional, IsString} from 'class-validator';
 
 export class CategoryPreviewDto {
     @Expose() id: number;
@@ -14,8 +14,15 @@ export class CategoryDto {
 }
 
 export class CreateCategoryDto {
-    @Expose() @IsString() name: string;
-    @Expose() @IsString() image: string;
+    @Expose()
+    @IsString()
+    @IsNotEmpty()
+    name: string;
+
+    @Expose()
+    @IsString()
+    @IsNotEmpty()
+    image: string;
 }
 
 export class UpdateCategoryDto {

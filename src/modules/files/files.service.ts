@@ -7,12 +7,12 @@ import {FILES_FOLDER} from '~/settings';
 
 import {IFileService} from './interfaces/IFileService';
 
-
 @Injectable()
 export class FileService implements IFileService {
     private fileNamesCache: string[];
 
-    constructor() {
+    constructor(
+    ) {
         this.initialize();
     }
 
