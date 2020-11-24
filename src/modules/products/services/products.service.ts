@@ -3,7 +3,7 @@ import {InjectRepository} from '@nestjs/typeorm';
 import {plainToClass} from 'class-transformer';
 import {Repository} from 'typeorm';
 
-import {CreateProductDto, ProductDto, UpdateProductDto} from './../dto/product.dto';
+import {CreateProductDto, ProductDto, ProductPreviewDto, UpdateProductDto} from './../dto/product.dto';
 import {ProductModel} from './../entities/product.entity';
 import {IProductsService} from './../interfaces/IProductsService';
 
@@ -18,7 +18,16 @@ export class ProductsService implements IProductsService {
         return plainToClass(ProductDto, product);
     }
 
-    createProduct = async (data: CreateProductDto, categoryId: number): Promise<ProductDto> => {
+    getProductsPreviews = async (): Promise<ProductPreviewDto[]> => {
+        const products = await this.productsRepository.find();
+
+        return plainToClass(ProductPreviewDto, products);
+    }
+
+    createProduct = async (
+        data: CreateProductDto & {image: string; certificate: string},
+        categoryId: number,
+    ): Promise<ProductDto> => {
         const product = this.productsRepository.create(data);
         product.categoryId = categoryId;
 

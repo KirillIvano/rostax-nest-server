@@ -3,7 +3,7 @@ import {InjectRepository} from '@nestjs/typeorm';
 import {plainToClass} from 'class-transformer';
 import {Repository} from 'typeorm';
 
-import {CategoryDto, CategoryPreviewDto, CreateCategoryDto, UpdateCategoryDto} from '../dto/category.dto';
+import {CategoryDto, CategoryPreviewDto, UpdateCategoryDto} from '../dto/category.dto';
 import {ProductPreviewDto} from '../dto/product.dto';
 import {ICategoriesService} from '../interfaces/ICategoriesService';
 import {CategoryModel} from './../entities/category.entity';
@@ -26,7 +26,7 @@ export class CategoriesService implements ICategoriesService {
     getProductsByCategory = async (categoryId: number): Promise<ProductPreviewDto[]> =>
         plainToClass(ProductPreviewDto, await this.productsRepository.find({categoryId}));
 
-    createCategory = async (body: CreateCategoryDto): Promise<CategoryDto> =>
+    createCategory = async (body: {name: string, image: string}): Promise<CategoryDto> =>
         plainToClass(CategoryDto, await this.categoriesRepository.save(body));
 
     updateCategory = async (categoryId: number, updates: UpdateCategoryDto): Promise<CategoryDto> => {

@@ -14,6 +14,10 @@ export class CategoryModel extends BaseEntity {
     @Column()
     image: string;
 
-    @OneToMany(() => ProductModel, product => product.category)
+    @OneToMany(
+        () => ProductModel,
+        product => product.category,
+        {cascade: ['remove']},
+    )
     products: Promise<ProductModel[]>
 }

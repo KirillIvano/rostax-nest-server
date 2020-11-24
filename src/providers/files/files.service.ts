@@ -5,10 +5,9 @@ import path from 'path';
 import {getUniqueName} from '~/util/getUniqueName';
 import {FILES_FOLDER} from '~/settings';
 
-import {IFileService} from './interfaces/IFileService';
 
 @Injectable()
-export class FileService implements IFileService {
+export class FileService {
     private fileNamesCache: string[];
 
     constructor(
@@ -39,6 +38,7 @@ export class FileService implements IFileService {
     private initialize(): void {
         try {
             const filesNames = fs.readdirSync(FILES_FOLDER);
+
             this.fileNamesCache = filesNames;
         } catch {
             this.fileNamesCache = [];

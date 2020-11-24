@@ -40,6 +40,7 @@
     "passport-local": "^1.0.0",
     "pg": "^8.4.1",
     "reflect-metadata": "^0.1.13",
+    "showdown": "^1.9.1",
     "styled-components": "^5.2.1",
     "typeorm": "^0.2.28"
   }

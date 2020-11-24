@@ -26,20 +26,11 @@ export class CreateProductDto {
     name: string;
 
     @IsString()
-    image: string;
-
-    @IsString()
     shortDescription: string;
 
-    @IsString()
-    @IsOptional()
-    certificate?: string;
-
-    @IsString()
     @IsOptional()
     description?: string;
 
-    @IsNumber()
     @IsOptional()
     price?: number;
 }
@@ -55,11 +46,11 @@ export class UpdateProductDto {
 
     @IsString()
     @IsOptional()
-    shortDescription?: string;
+    certificate?: string;
 
     @IsString()
     @IsOptional()
-    certificate?: string;
+    shortDescription?: string;
 
     @IsString()
     @IsOptional()

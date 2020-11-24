@@ -37,7 +37,7 @@ export class ProductModel extends BaseEntity{
     @ManyToOne(
         () => CategoryModel,
         category => category.products,
-        {cascade: ['remove']},
+        {onDelete: 'CASCADE'},
     )
     @JoinColumn({name: 'categoryId'})
     category: Promise<CategoryModel>;
