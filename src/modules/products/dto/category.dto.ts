@@ -1,5 +1,5 @@
 import {Expose, Exclude} from 'class-transformer';
-import {IsNotEmpty, IsNumber, IsOptional, IsString} from 'class-validator';
+import {IsNotEmpty, IsOptional, IsString} from 'class-validator';
 
 export class CategoryPreviewDto {
     @Expose() id: number;

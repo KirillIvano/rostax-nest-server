@@ -20,8 +20,11 @@ export class CategoriesService implements ICategoriesService {
     getCategories = async (): Promise<CategoryPreviewDto[]> =>
         plainToClass(CategoryPreviewDto, await this.categoriesRepository.find());
 
-    getCategoryById = async (categoryId: number): Promise<CategoryDto> =>
-        plainToClass(CategoryDto, await this.categoriesRepository.findOne(categoryId));
+    getCategoryById = async (categoryId: number): Promise<CategoryDto> => {
+        const category = await this.categoriesRepository.findOne(categoryId);
+
+        return plainToClass(CategoryDto, category);
+    }
 
     getProductsByCategory = async (categoryId: number): Promise<ProductPreviewDto[]> =>
         plainToClass(ProductPreviewDto, await this.productsRepository.find({categoryId}));

@@ -1,7 +1,8 @@
-import {Controller, Inject, Post, UploadedFile, UseInterceptors} from '@nestjs/common';
+import {Controller, Inject, Post, UploadedFile, UseInterceptors, UseGuards} from '@nestjs/common';
 import {FileInterceptor} from '@nestjs/platform-express';
 
 import {getFileExtension} from '~/util/getFileExtension';
+import {AuthGuard} from '~/guards/auth.guard';
 
 import {IFileService} from './interfaces/IFileService';
 
@@ -13,6 +14,7 @@ export class FilesController {
     ) {}
 
     @Post()
+    @UseGuards(AuthGuard)
     @UseInterceptors(FileInterceptor('file'))
     uploadFile(@UploadedFile() file: Express.Multer.File): {fileName: string} {
         const extension = getFileExtension(file.originalname);

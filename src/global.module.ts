@@ -1,7 +1,6 @@
 import {Module, Global} from '@nestjs/common';
 
-import { FileService } from './providers/files/files.service';
-
+import {FileService} from './providers/files/files.service';
 
 
 @Global()

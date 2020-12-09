@@ -14,10 +14,12 @@ import {
     UseInterceptors,
     UploadedFile,
     UploadedFiles,
+    UseGuards,
 } from '@nestjs/common';
 import {FileFieldsInterceptor, FileInterceptor} from '@nestjs/platform-express';
 
 import {getFileExtension} from '~/util/getFileExtension';
+import {AuthGuard} from '~/guards/auth.guard';
 
 import {CreateProductDto, ProductDto, ProductPreviewDto, UpdateProductDto} from './dto/product.dto';
 import {CategoryDto, CategoryPreviewDto, CreateCategoryDto, UpdateCategoryDto} from './dto/category.dto';
@@ -35,6 +37,7 @@ export class ProductsController {
     ) {}
 
     @Post()
+    @UseGuards(AuthGuard)
     @UsePipes(new ValidationPipe({whitelist: true}))
     @UseInterceptors(FileFieldsInterceptor([
         {name: 'image', maxCount: 1},
@@ -71,15 +74,42 @@ export class ProductsController {
     }
 
     @Put('/:productId')
+    @UseGuards(AuthGuard)
     @UsePipes(new ValidationPipe({whitelist: true}))
+    @UseInterceptors(FileFieldsInterceptor([
+        {name: 'image', maxCount: 1},
+        {name: 'certificate', maxCount: 1},
+    ]))
     async updateProduct(
         @Param('productId', ParseIntPipe) productId: number,
-        @Body() body: UpdateProductDto,
+        @Body(new ValidationPipe({whitelist: true})) body: UpdateProductDto,
+        @UploadedFiles() files: {image: Express.Multer.File[], certificate: Express.Multer.File[]},
     ): Promise<ProductDto> {
+        const {image, certificate} = files;
+
+        if (image && image[0]) {
+            const imageFile = image[0];
+
+            const imageExtension = getFileExtension(imageFile.originalname);
+            const imageName = this.filesService.addFile(imageExtension, imageFile.buffer);
+
+            body.image = imageName;
+        }
+
+        if (certificate && certificate[0]) {
+            const certFile = certificate[0];
+
+            const certExtension = getFileExtension(certFile.originalname);
+            const certName = this.filesService.addFile(certExtension, certFile.buffer);
+
+            body.certificate = certName;
+        }
+
         return this.productsService.updateProduct(productId, body);
     }
 
     @Delete('/:productId')
+    @UseGuards(AuthGuard)
     async deleteProduct(
         @Param('productId', ParseIntPipe) productId: number,
     ): Promise<Record<string, string>> {
@@ -94,13 +124,16 @@ export class ProductsController {
     }
 
     @Get('/categories/:categoryId')
-    getCategoryById(
+    async getCategoryById(
         @Param('categoryId', ParseIntPipe) categoryId: number,
-    ): Promise<CategoryDto> {
-        return this.categoriesService.getCategoryById(categoryId);
+    ): Promise<{category: CategoryDto}> {
+        const category = await this.categoriesService.getCategoryById(categoryId);
+
+        return {category};
     }
 
     @Post('/categories')
+    @UseGuards(AuthGuard)
     @UseInterceptors(FileInterceptor('image'))
     async createCategory(
         @Body(new ValidationPipe({whitelist: true})) body: CreateCategoryDto,
@@ -116,6 +149,7 @@ export class ProductsController {
     }
 
     @Delete('/categories/:categoryId')
+    @UseGuards(AuthGuard)
     async deleteCategory(
         @Param('categoryId', ParseIntPipe) categoryId: number,
     ): Promise<Record<string, string>> {
@@ -125,6 +159,7 @@ export class ProductsController {
     }
 
     @Put('/categories/:categoryId')
+    @UseGuards(AuthGuard)
     @UseInterceptors(FileInterceptor('image'))
     async updateCategory(
         @Param('categoryId', ParseIntPipe) categoryId: number,

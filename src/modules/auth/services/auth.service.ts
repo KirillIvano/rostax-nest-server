@@ -1,6 +1,8 @@
 import {Injectable} from '@nestjs/common';
-import { ADMIN_PASSWORD } from '~/settings';
-import { IAuthService } from '../interfaces/IAuthService';
+
+import {ADMIN_PASSWORD} from '~/settings';
+
+import {IAuthService} from '../interfaces/IAuthService';
 
 
 @Injectable()

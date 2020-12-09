@@ -1,5 +1,5 @@
-import {Expose} from 'class-transformer';
-import {IsOptional, IsString, IsNumber} from 'class-validator';
+import {Expose, Exclude} from 'class-transformer';
+import {IsOptional, IsString} from 'class-validator';
 
 
 export class ProductDto {
@@ -35,6 +35,7 @@ export class CreateProductDto {
     price?: number;
 }
 
+// TODO: конечно, нужно сделать отдельные интерфейсы для Dto и сервисов
 export class UpdateProductDto {
     @IsString()
     @IsOptional()
@@ -42,10 +43,12 @@ export class UpdateProductDto {
 
     @IsString()
     @IsOptional()
+    @Exclude()
     image?: string;
 
     @IsString()
     @IsOptional()
+    @Exclude()
     certificate?: string;
 
     @IsString()
@@ -56,7 +59,6 @@ export class UpdateProductDto {
     @IsOptional()
     description?: string;
 
-    @IsNumber()
     @IsOptional()
     price?: number;
 }

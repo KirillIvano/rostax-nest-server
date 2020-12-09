@@ -3,8 +3,8 @@ import {TypeOrmModule} from '@nestjs/typeorm';
 
 import {ProductsModule} from './modules/products/products.module';
 import {FilesModule} from './modules/files/files.module';
-import { GlobalModule } from './global.module';
-import { AuthModule } from './modules/auth/auth.module';
+import {GlobalModule} from './global.module';
+import {AuthModule} from './modules/auth/auth.module';
 
 
 @Module({

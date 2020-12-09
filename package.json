@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "concurrently \"tsc -w\" \"nodemon ./dist/index.js\""
+    "dev": "concurrently \"tsc -w\" \"nodemon ./dist/index.js\"",
+    "remote-dev": "nodemon ./dist/index.js",
+    "prod": "forever ./dist/index.js &"
   },
   "author": "",
   "license": "ISC",

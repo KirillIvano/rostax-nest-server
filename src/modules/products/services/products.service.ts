@@ -7,7 +7,6 @@ import {CreateProductDto, ProductDto, ProductPreviewDto, UpdateProductDto} from 
 import {ProductModel} from './../entities/product.entity';
 import {IProductsService} from './../interfaces/IProductsService';
 
-
 @Injectable()
 export class ProductsService implements IProductsService {
     constructor(@InjectRepository(ProductModel) private productsRepository: Repository<ProductModel>) {}
