@@ -22,14 +22,14 @@ export class ProductModel extends BaseEntity{
     @Column()
     shortDescription: string;
 
-    @Column()
-    image: string;
-
     @Column({default: ''})
     description?: string
 
     @Column({default: null, nullable: true})
     price?: number;
+
+    @Column({default: ''})
+    image: string;
 
     @Column({default: ''})
     certificate?: string;

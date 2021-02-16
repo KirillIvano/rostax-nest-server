@@ -16,9 +16,9 @@ export class FilesController {
     @Post()
     @UseGuards(AuthGuard)
     @UseInterceptors(FileInterceptor('file'))
-    uploadFile(@UploadedFile() file: Express.Multer.File): {fileName: string} {
+    async uploadFile(@UploadedFile() file: Express.Multer.File): Promise<{fileName: string}> {
         const extension = getFileExtension(file.originalname);
-        const fileName = this.fileService.addFile(extension, file.buffer);
+        const fileName = await this.fileService.addFile(extension, file.buffer);
 
         return {fileName};
     }

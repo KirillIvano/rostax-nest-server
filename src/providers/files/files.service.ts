@@ -1,5 +1,5 @@
 import {Injectable} from '@nestjs/common';
-import fs from 'fs';
+import {promises as fs} from 'fs';
 import path from 'path';
 
 import {getUniqueName} from '~/util/getUniqueName';
@@ -10,16 +10,16 @@ import {FILES_FOLDER} from '~/settings';
 export class FileService {
     private fileNamesCache: string[];
 
-    constructor(
-    ) {
-        this.initialize();
+    public async saveFile(fileName: string, file: Buffer): Promise<void> {
+        const filePath = path.resolve(FILES_FOLDER, fileName);
+
+        fs.writeFile(filePath, file);
     }
 
-    public addFile(extension: string, file: Buffer): string {
+    public async addFile(extension: string, file: Buffer): Promise<string> {
         const fileName = this.generateFileName(extension);
-        const writeStream = fs.createWriteStream(path.join(FILES_FOLDER, fileName));
 
-        writeStream.write(file);
+        this.saveFile(fileName, file);
         this.fileNamesCache.push(fileName);
 
         return fileName;
@@ -35,9 +35,9 @@ export class FileService {
         return `${fileName}.${extension}`;
     }
 
-    private initialize(): void {
+    async initialize(): Promise<void> {
         try {
-            const filesNames = fs.readdirSync(FILES_FOLDER);
+            const filesNames = await fs.readdir(FILES_FOLDER);
 
             this.fileNamesCache = filesNames;
         } catch {

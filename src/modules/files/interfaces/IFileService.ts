@@ -1,3 +1,3 @@
 export interface IFileService {
-    addFile: (extension: string, file: Buffer) => string
+    addFile: (extension: string, file: Buffer) => Promise<string>
 }

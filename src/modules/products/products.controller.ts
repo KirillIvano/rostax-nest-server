@@ -43,7 +43,7 @@ export class ProductsController {
         {name: 'image', maxCount: 1},
         {name: 'certificate', maxCount: 1},
     ]))
-    createProduct(
+    async createProduct(
         @Body() body: CreateProductDto,
         @Query('categoryId', ParseIntPipe) categoryId: number,
         @UploadedFiles() files: {image: Express.Multer.File[], certificate: Express.Multer.File[]},
@@ -51,10 +51,10 @@ export class ProductsController {
         const {image: [imageFile], certificate: [certFile]} = files;
 
         const imageExtension = getFileExtension(imageFile.originalname);
-        const imageName = this.filesService.addFile(imageExtension, imageFile.buffer);
+        const imageName = await this.filesService.addFile(imageExtension, imageFile.buffer);
 
         const certExtension = getFileExtension(certFile.originalname);
-        const certName = this.filesService.addFile(certExtension, certFile.buffer);
+        const certName = await this.filesService.addFile(certExtension, certFile.buffer);
 
         return this.productsService.createProduct(
             {
@@ -91,7 +91,7 @@ export class ProductsController {
             const imageFile = image[0];
 
             const imageExtension = getFileExtension(imageFile.originalname);
-            const imageName = this.filesService.addFile(imageExtension, imageFile.buffer);
+            const imageName = await this.filesService.addFile(imageExtension, imageFile.buffer);
 
             body.image = imageName;
         }
@@ -100,7 +100,7 @@ export class ProductsController {
             const certFile = certificate[0];
 
             const certExtension = getFileExtension(certFile.originalname);
-            const certName = this.filesService.addFile(certExtension, certFile.buffer);
+            const certName = await this.filesService.addFile(certExtension, certFile.buffer);
 
             body.certificate = certName;
         }
@@ -140,7 +140,7 @@ export class ProductsController {
         @UploadedFile() imageFile: Express.Multer.File,
     ): Promise<CategoryDto> {
         const imageExtension = getFileExtension(imageFile.originalname);
-        const imageName = this.filesService.addFile(imageExtension, imageFile.buffer);
+        const imageName = await this.filesService.addFile(imageExtension, imageFile.buffer);
 
         return this.categoriesService.createCategory({
             ...body,
@@ -168,7 +168,7 @@ export class ProductsController {
     ): Promise<CategoryDto> {
         if (file) {
             const imageExtension = getFileExtension(file.originalname);
-            const fileName = this.filesService.addFile(imageExtension, file.buffer);
+            const fileName = await this.filesService.addFile(imageExtension, file.buffer);
 
             body.image = fileName;
         }

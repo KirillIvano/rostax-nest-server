@@ -5,11 +5,13 @@ import {ProductsModule} from './modules/products/products.module';
 import {FilesModule} from './modules/files/files.module';
 import {GlobalModule} from './global.module';
 import {AuthModule} from './modules/auth/auth.module';
+import {PriceListModule} from './modules/priceList/priceList.module';
 
 
 @Module({
     imports: [
         ProductsModule,
+        PriceListModule,
         FilesModule,
         AuthModule,
         TypeOrmModule.forRoot({
